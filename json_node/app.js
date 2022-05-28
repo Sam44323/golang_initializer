@@ -1,7 +1,9 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 
 app = express();
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", (_, res) => {
   res.json({
@@ -16,6 +18,7 @@ app.post("/post", (req, res) => {
 });
 
 app.post("/postForm", (req, res) => {
+  console.log(req.body);
   res.status(200).json(JSON.stringify(req.body));
 });
 
