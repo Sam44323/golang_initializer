@@ -26,4 +26,13 @@ func PerformGetRequest() {
 	content, _ := ioutil.ReadAll(response.Body)
 
 	fmt.Println("Content of the response: ", string(content))
+
+	/*
+		Alternative method for reading a response
+		var responseString string.Builder
+		content, _ := ioutil.ReadAll(response.Body)
+		byteCount, _ := responseString.Write(content)
+
+		fmt.Println("Content of the response: ", responseString.String()) // printing the string content of response
+	*/
 }
