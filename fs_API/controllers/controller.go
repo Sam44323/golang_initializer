@@ -6,6 +6,8 @@ import (
 	"log"
 
 	model "github.com/Sam44323/fs_API/models"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -46,4 +48,20 @@ func insertOneMovie(movie model.Netflix) {
 	}
 
 	fmt.Println("Inserted a movie: ", data.InsertedID)
+}
+
+// update a record
+
+func updateOneMovie(movieId string) {
+	id, _ := primitive.ObjectIDFromHex(movieId)
+	filter := bson.M{"_id": id}                       // creating the query for filter
+	update := bson.M{"$set": bson.M{"watched": true}} // creating the query for updates
+
+	res, err := collection.UpdateOne(context.Background(), filter, update)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("Movie updated! ", res.ModifiedCount)
 }
