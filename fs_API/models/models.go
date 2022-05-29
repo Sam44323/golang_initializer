@@ -1,7 +1,5 @@
 package model
 
-// mongodb://localhost:27017/Genesis_Signup_Test
-
 import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
