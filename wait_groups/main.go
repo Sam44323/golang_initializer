@@ -6,7 +6,16 @@ import (
 )
 
 func main() {
+	websiteList := []string{
+		"https://www.google.com",
+		"https://www.facebook.com",
+		"https://www.amazon.com",
+		"https://www.youtube.com",
+	}
 
+	for _, web := range websiteList {
+		getStatusCode(web)
+	}
 }
 
 func getStatusCode(endpoint string) {
