@@ -8,6 +8,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
 // Models for course and author
@@ -50,10 +52,9 @@ func getCourses(res http.ResponseWriter, req *http.Request) {
 func getOneCourse(res http.ResponseWriter, req *http.Request) {
 	fmt.Println("Getting one course")
 	res.Header().Set("Content-Type", "application/json")
-	params := req.URL.Query()
-	id := params.Get("id")
+	params := mux.Vars(req) // getting the id from the url
 	for _, c := range courses {
-		if c.CourseId == id {
+		if c.CourseId == params["id"] {
 			json.NewEncoder(res).Encode(c)
 			goto send
 		}
