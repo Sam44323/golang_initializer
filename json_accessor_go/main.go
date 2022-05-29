@@ -16,6 +16,7 @@ type course struct {
 func main() {
 	fmt.Println("Initializing the JSON accessor!")
 	EncodeJson()
+	DecodeJson()
 }
 
 // encoding any data into JSON
@@ -53,4 +54,33 @@ func EncodeJson() {
 	}
 
 	fmt.Println(string(finalJson))
+}
+
+func DecodeJson() {
+
+	// decoding a json byte data to json
+	jsonData := []byte(`
+		{
+                "coursename": "Go",
+                "platform": "Golang",
+                "Price": 1000,
+                "tags": ["Go","Golang","Programming"]
+    }
+	`)
+
+	checkValid := json.Valid(jsonData)
+
+	if checkValid != true {
+		fmt.Println("Invalid JSON")
+		return
+	}
+
+	var courses course
+	err := json.Unmarshal(jsonData, &courses) // unmarshal the json data to the course struct
+
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("%#v\n", courses) // %#v is used to print interfaces
 }
