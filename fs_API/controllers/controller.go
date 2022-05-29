@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 
+	model "github.com/Sam44323/fs_API/models"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -31,4 +32,18 @@ func init() {
 	connection = client.Database("GO_DB").Collection(collName)
 
 	fmt.Println("Collection is ready!")
+}
+
+// MONGODB helpers
+
+// insert a record
+
+func insertOneMovie(movie model.Netflix) {
+	data, err := collection.InsertOne(context.Background(), movie)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("Inserted a movie: ", data.InsertedID)
 }
