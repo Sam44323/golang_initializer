@@ -133,5 +133,13 @@ func deleteOneCourse(res http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
+	fmt.Println("Initiating the server")
 
+	// creating a new router
+	r := mux.NewRouter()
+
+	// seeding the database
+	course = append(courses, Course{CourseId: "1", CourseName: "Go", CoursePrice: 100, Author: &Author{Fullname: "Golang", Website: "golang.org"}})
+	course = append(courses, Course{CourseId: "2", CourseName: "Python", CoursePrice: 200, Author: &Author{Fullname: "Python", Website: "python.org"}})
+	course = append(courses, Course{CourseId: "3", CourseName: "Java", CoursePrice: 300, Author: &Author{Fullname: "Java", Website: "java.org"}})
 }
