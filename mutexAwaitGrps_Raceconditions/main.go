@@ -11,9 +11,7 @@ func main() {
 	wg := &sync.WaitGroup{} // storing a wait_group pointer
 	mut := &sync.RWMutex{}
 
-	mut.RLock() // add mutex locking for reading
 	var data = []int{0}
-	mut.RUnlock()
 
 	wg.Add(3) // total_number of go-routines
 	// IIFE in golang
@@ -36,6 +34,12 @@ func main() {
 		data = append(data, 3)
 		mut.Unlock()
 		fmt.Println("Three!")
+		wg.Done()
+	}(wg, mut)
+	go func(wg *sync.WaitGroup, mut *sync.RWMutex) {
+		mut.RLock() // adding mutex locking for reading
+		fmt.Println("Reading: ", data)
+		mut.RUnlock()
 		wg.Done()
 	}(wg, mut)
 
