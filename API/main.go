@@ -46,12 +46,14 @@ func serveHome(res http.ResponseWriter, req *http.Request) {
 	res.Write([]byte("<h1>Welcome to the Home Page</h1>"))
 }
 
+// getting all the course
 func getCourses(res http.ResponseWriter, req *http.Request) {
 	fmt.Println("Getting all the data")
 	res.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(res).Encode(courses)
 }
 
+// getting a single course
 func getOneCourse(res http.ResponseWriter, req *http.Request) {
 	fmt.Println("Getting one course")
 	res.Header().Set("Content-Type", "application/json")
@@ -65,6 +67,7 @@ func getOneCourse(res http.ResponseWriter, req *http.Request) {
 	json.NewEncoder(res).Encode("No such course was found!")
 }
 
+// creating a new_course
 func createOneCourse(res http.ResponseWriter, req *http.Request) {
 	fmt.Println("Creating one course")
 	res.Header().Set("Content-Type", "application/json")
@@ -91,6 +94,26 @@ func createOneCourse(res http.ResponseWriter, req *http.Request) {
 	return
 
 	// appending the new course to the courses_slice
+}
+
+// updating a course
+
+func updateOneCourse(res http.ResponseWriter, req *http.Request) {
+	fmt.Println("Updating one course")
+	res.Header().Set("Content-Type", "application/json")
+	params := mux.Vars(req) // getting the id from the url
+	for index, c := range courses {
+		if c.CourseId == params["id"] {
+			courses = append(courses[:index], courses[index+1:]...) // removing the course with that id
+			var course Course
+			_ = json.NewDecoder(req.Body).Decode(&course)
+			course.CourseId = params["id"]
+			courses = append(courses, course) // adding the new/updated course
+			json.NewEncoder(res).Encode(course)
+			return
+		}
+	}
+	json.NewEncoder(res).Encode("No such course was found!")
 }
 
 func main() {
