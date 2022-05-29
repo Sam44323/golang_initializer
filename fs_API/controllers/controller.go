@@ -34,7 +34,7 @@ func init() {
 
 	fmt.Println("Connected to MongoDB!")
 
-	connection = client.Database("GO_DB").Collection(collName)
+	_ = client.Database("GO_DB").Collection(collName)
 
 	fmt.Println("Collection is ready!")
 }
@@ -126,15 +126,13 @@ func getAllMovies() []primitive.M {
 
 // controllers
 
-func GetAllMovies(res http.ResponseWriter, req *http.Response) []primitive.M {
-	res.Header().Set("Content-Type", "application/json")
+func GetAllMovies(w http.ResponseWriter, req *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "*")
 
 	allMovies := getAllMovies()
-	err := json.NewEncoder(res).Encode(allMovies)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return allMovies
+	json.NewEncoder(w).Encode(allMovies)
 }
 
 func CreateMovie(w http.ResponseWriter, req *http.Request) {

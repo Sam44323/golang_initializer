@@ -8,9 +8,8 @@ import (
 func Router() *mux.Router {
 	router := mux.NewRouter()
 
-	// Routes consist of a path and a handler function.
-	router.HandleFunc("/", controller.GetAllMovies).Methods("GET")
-	router.HandleFunc("/movies", controller.CreateMovie).Methods("GET")
+	// Routes consist of a path and a handler function
+	router.HandleFunc("/movies", controller.GetAllMovies).Methods("GET")
 	router.HandleFunc("/movies", controller.CreateMovie).Methods("POST")
 	router.HandleFunc("/movies/{id}", controller.MarkAsWatched).Methods("PUT")
 	router.HandleFunc("/movies", controller.DeleteAllMovie).Methods("DELETE")
