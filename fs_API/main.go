@@ -9,6 +9,6 @@ import (
 )
 
 func main() {
-	fmt.Printf("Server is active \n")
 	log.Fatal(http.ListenAndServe(":3000", routes.Router()))
+	fmt.Printf("Listening on PORT 4000... \n")
 }
