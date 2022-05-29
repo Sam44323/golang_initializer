@@ -6,11 +6,11 @@ import (
 )
 
 type course struct {
-	Name     string `json:"coursename"`
-	Platform string
+	Name     string `json:"coursename"` // will be named as coursename
+	Platform string `json:"platform"`
 	Price    int
-	Password string
-	Tags     []string
+	Password string   `json:"-"`              // will not be included in the JSON
+	Tags     []string `json:"tags,omitempty"` // will be included in the JSON only if tags is not empty
 }
 
 func main() {
@@ -46,7 +46,6 @@ func EncodeJson() {
 	}
 
 	// packaging this data as JSON
-
 	finalJson, err := json.MarshalIndent(courses, "", "\t")
 
 	if err != nil {
