@@ -21,7 +21,7 @@ import (
 type Course struct {
 	CourseId    string  `json="courseid"`
 	CourseName  string  `json="coursename"`
-	CoursePrice int     `json="price"`
+	CoursePrice int     `json="-"`
 	Author      *Author `json="author"`
 }
 
