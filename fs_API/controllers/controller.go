@@ -2,10 +2,13 @@ package controller
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
+	"net/http"
 
 	model "github.com/Sam44323/fs_API/models"
+	"github.com/gorilla/mux"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -119,4 +122,39 @@ func getAllMovies() []primitive.M {
 	}
 	defer cursor.Close(context.Background())
 	return movies
+}
+
+// controllers
+
+func GetAllMovies(w http.ResponseWriter req *http.Response) []primitive.M {
+	w.Header().Set("Content-Type", "application/json")
+
+	allMovies := getAllMovies()
+	if err := json.NewEncoder(w).Encode(allMovies), err != nil {
+		log.Fatal(err)
+	}
+	return allMovies
+}
+
+func CreateMovie(w http.ResponseWriter, req *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*") 
+	w.Header().Set("Access-Control-Allow-Methods", "*") 
+
+	var movie model.Netflix
+
+	_ = json.NewDecoder(req.Body).Decode(&movie)
+
+	insertOneMovie(movie)
+	json.NewEncoder(w).Encode(movie)
+}
+
+func MarkAsWatched(w http.ResponseWriter, req *http.Request){
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*") 
+	w.Header().Set("Access-Control-Allow-Methods", "*") 
+	
+	params := mux.Vars(req)
+	updateOneMovie(params["id"])
+	json.NewEncoder(w).Encode(params)
 }
