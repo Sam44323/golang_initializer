@@ -1,15 +1,29 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+)
 
 func main() {
 	fmt.Println("Channels in golang!")
 
 	// data can't be sent to channel unless there is a go_routine
+	wg := *&sync.WaitGroup{}
+	channel := make(chan int, 1) // creating a channel that handles integer (having 1 as buffer value so that it can listen to multiple values instead of flushing)
 
-	channel := make(chan int) // creating a channel that handles integer
+	wg.Add(2)
+	go func(ch chan int, wg *sync.WaitGroup) {
+		fmt.Println("Receiving data from channel: ", <-ch)
+		wg.Done()
+	}(channel, &wg)
+	go func(ch chan int, wg *sync.WaitGroup) {
+		fmt.Println("Sending data to the channel")
+		ch <- 10
+		ch <- 15
+		close(channel) // closing a channel
+		wg.Done()
+	}(channel, &wg)
 
-	channel <- 10 // sending data to the channel
-
-	fmt.Println(<-channel) // receiving data from the channel
+	wg.Wait()
 }
