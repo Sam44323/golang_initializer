@@ -154,7 +154,7 @@ func MarkAsWatched(w http.ResponseWriter, req *http.Request){
 	w.Header().Set("Access-Control-Allow-Origin", "*") 
 	w.Header().Set("Access-Control-Allow-Methods", "*") 
 	
-	params := mux.Vars(req)
+	params := mux.Vars(req) // getting all the params
 	updateOneMovie(params["id"])
 	json.NewEncoder(w).Encode(params)
 }
