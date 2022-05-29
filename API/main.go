@@ -7,6 +7,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"math/rand"
 	"net/http"
 	"strconv"
@@ -139,7 +140,9 @@ func main() {
 	r := mux.NewRouter()
 
 	// seeding the database
-	course = append(courses, Course{CourseId: "1", CourseName: "Go", CoursePrice: 100, Author: &Author{Fullname: "Golang", Website: "golang.org"}})
-	course = append(courses, Course{CourseId: "2", CourseName: "Python", CoursePrice: 200, Author: &Author{Fullname: "Python", Website: "python.org"}})
-	course = append(courses, Course{CourseId: "3", CourseName: "Java", CoursePrice: 300, Author: &Author{Fullname: "Java", Website: "java.org"}})
+	courses = append(courses, Course{CourseId: "1", CourseName: "Go", CoursePrice: 100, Author: &Author{Fullname: "Golang", Website: "golang.org"}})
+	courses = append(courses, Course{CourseId: "2", CourseName: "Python", CoursePrice: 200, Author: &Author{Fullname: "Python", Website: "python.org"}})
+	courses = append(courses, Course{CourseId: "3", CourseName: "Java", CoursePrice: 300, Author: &Author{Fullname: "Java", Website: "java.org"}})
+
+	log.Fatal(http.ListenAndServe(":3000", r)) // equivalent to console.error
 }
