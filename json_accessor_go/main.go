@@ -83,4 +83,16 @@ func DecodeJson() {
 	}
 
 	fmt.Printf("%#v\n", courses) // %#v is used to print interfaces
+
+	// case where the you want key-value pair and don't have a previously created struct for that
+
+	var niceJsonData map[string]interface{} // interface{} when  you don't know the type of the data
+
+	err = json.Unmarshal(jsonData, &niceJsonData)
+
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("Nice JSON data: %#v\n", niceJsonData) // %#v is used to print interfaces
 }
