@@ -6,7 +6,10 @@ import (
 	"sync"
 )
 
+var signals []string
+
 var wg sync.WaitGroup // will be updated to pointers_later
+var mut sync.Mutex    // mutex in data [will be updated to pointers]
 
 func main() {
 	websiteList := []string{
@@ -22,7 +25,7 @@ func main() {
 	}
 
 	wg.Wait() // usually is present at the end of the method and will wait for all the routines to complete
-
+	fmt.Println(signals)
 }
 
 func getStatusCode(endpoint string) {
@@ -33,6 +36,8 @@ func getStatusCode(endpoint string) {
 	if err != nil {
 		fmt.Println("Oops!")
 	}
-
+	mut.Lock() // locking the other writer
+	signals = append(signals, endpoint)
+	mut.Unlock() // unlocking the other_writer
 	fmt.Printf("%d status code endpoint for %s \n", result.StatusCode, endpoint)
 }
