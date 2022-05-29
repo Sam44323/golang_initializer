@@ -47,6 +47,21 @@ func getCourses(res http.ResponseWriter, req *http.Request) {
 	json.NewEncoder(res).Encode(courses)
 }
 
+func getOneCourse(res http.ResponseWriter, req *http.Request) {
+	fmt.Println("Getting one course")
+	res.Header().Set("Content-Type", "application/json")
+	params := req.URL.Query()
+	id := params.Get("id")
+	for _, c := range courses {
+		if c.CourseId == id {
+			json.NewEncoder(res).Encode(c)
+			goto send
+		}
+	}
+send:
+	json.NewEncoder(res).Encode(&Course{})
+}
+
 func main() {
 
 }
