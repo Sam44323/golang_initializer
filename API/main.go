@@ -87,6 +87,14 @@ func createOneCourse(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	// when the title is same
+	for _, c := range courses {
+		if c.CourseName == course.CourseName {
+			json.NewEncoder(res).Encode("Course already exists!")
+			return
+		}
+	}
+
 	// generating a new id and converting it to string
 	rand.Seed(time.Now().UnixNano())
 	course.CourseId = strconv.Itoa(rand.Intn(100)) // converting the integer to a string
@@ -108,6 +116,13 @@ func updateOneCourse(res http.ResponseWriter, req *http.Request) {
 			courses = append(courses[:index], courses[index+1:]...) // removing the course with that id
 			var course Course
 			_ = json.NewDecoder(req.Body).Decode(&course)
+			// when the title is same
+			for _, c := range courses {
+				if c.CourseName == course.CourseName {
+					json.NewEncoder(res).Encode("Course already exists!")
+					return
+				}
+			}
 			course.CourseId = params["id"]
 			courses = append(courses, course) // adding the new/updated course
 			json.NewEncoder(res).Encode(course)
