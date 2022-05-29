@@ -56,11 +56,10 @@ func getOneCourse(res http.ResponseWriter, req *http.Request) {
 	for _, c := range courses {
 		if c.CourseId == params["id"] {
 			json.NewEncoder(res).Encode(c)
-			goto send
+			return
 		}
 	}
-send:
-	json.NewEncoder(res).Encode(&Course{})
+	json.NewEncoder(res).Encode("No such course was found!")
 }
 
 func main() {
