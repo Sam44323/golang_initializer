@@ -158,3 +158,13 @@ func MarkAsWatched(w http.ResponseWriter, req *http.Request){
 	updateOneMovie(params["id"])
 	json.NewEncoder(w).Encode(params)
 }
+
+func DeleteAMovie(w http.ResponseWriter, req *http.Request){
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*") 
+	w.Header().Set("Access-Control-Allow-Methods", "*") 
+
+	params := mux.Vars(req)
+	deleteOneMovie(params["id"])
+	json.NewEncoder(w).Encode(params)
+}
