@@ -83,8 +83,8 @@ func deleteOneMovie(movieId string) {
 
 // delete multiple_records
 
-func deleteManyMovies() {
-	filter := primitive.M{{}} // it means delete everything
+func deleteManyMovies() int {
+	filter := bson.D{{}} // it means delete everything
 
 	res, err := collection.DeleteMany(context.Background(), filter)
 
@@ -93,4 +93,5 @@ func deleteManyMovies() {
 	}
 
 	fmt.Println("Movie deleted! ", res.DeletedCount)
+	return int(res.DeletedCount)
 }
