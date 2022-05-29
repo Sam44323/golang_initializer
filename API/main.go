@@ -144,5 +144,14 @@ func main() {
 	courses = append(courses, Course{CourseId: "2", CourseName: "Python", CoursePrice: 200, Author: &Author{Fullname: "Python", Website: "python.org"}})
 	courses = append(courses, Course{CourseId: "3", CourseName: "Java", CoursePrice: 300, Author: &Author{Fullname: "Java", Website: "java.org"}})
 
+	// routing
+	r.HandleFunc("/", serveHome).Methods("GET")
+	r.HandleFunc("/courses", getCourses).Methods("GET")
+	r.HandleFunc("/courses/{id}", getOneCourse).Methods("GET")
+	r.HandleFunc("/courses", createOneCourse).Methods("POST")
+	r.HandleFunc("/courses/{id}", updateOneCourse).Methods("PUT")
+	r.HandleFunc("/courses/{id}", deleteOneCourse).Methods("DELETE")
+
+	// listening to a port
 	log.Fatal(http.ListenAndServe(":3000", r)) // equivalent to console.error
 }
