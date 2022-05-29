@@ -12,13 +12,13 @@ import (
 const connectionString = "mongodb://localhost:27017"
 const collName = "watchlist"
 
-var collection *mongo.collection
+var collection *mongo.Collection
 
 // connecting with MONGODB
 
 func init() {
 	// client_options
-	clientOption := options.Client().applyURI(connectionString)
+	clientOption := options.Client().ApplyURI(connectionString)
 
 	// connect to MDB
 	client, err := mongo.Connect(context.TODO(), clientOption) // contexting the connection for use in later
