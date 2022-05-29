@@ -16,5 +16,5 @@ func getStatusCode(endpoint string) {
 		fmt.Println("Oops!")
 	}
 
-	fmt.Printf("%d status code endpoint \n", result.StatusCode)
+	fmt.Printf("%d status code endpoint for %s \n", result.StatusCode, endpoint)
 }
