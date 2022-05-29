@@ -14,7 +14,9 @@ func main() {
 
 	wg.Add(2)
 	go func(ch chan int, wg *sync.WaitGroup) {
-		fmt.Println("Receiving data from channel: ", <-ch)
+		value, isChannelOpen := <-ch
+		fmt.Println("Receiving data from channel: ", value)
+		fmt.Println("Is channel open: ", isChannelOpen)
 		wg.Done()
 	}(channel, &wg)
 	go func(ch chan int, wg *sync.WaitGroup) {
