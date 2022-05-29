@@ -126,11 +126,12 @@ func getAllMovies() []primitive.M {
 
 // controllers
 
-func GetAllMovies(w http.ResponseWriter req *http.Response) []primitive.M {
-	w.Header().Set("Content-Type", "application/json")
+func GetAllMovies(res http.ResponseWriter, req *http.Response) []primitive.M {
+	res.Header().Set("Content-Type", "application/json")
 
 	allMovies := getAllMovies()
-	if err := json.NewEncoder(w).Encode(allMovies), err != nil {
+	err := json.NewEncoder(res).Encode(allMovies)
+	if err != nil {
 		log.Fatal(err)
 	}
 	return allMovies
@@ -138,8 +139,8 @@ func GetAllMovies(w http.ResponseWriter req *http.Response) []primitive.M {
 
 func CreateMovie(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "*") 
-	w.Header().Set("Access-Control-Allow-Methods", "*") 
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "*")
 
 	var movie model.Netflix
 
@@ -149,31 +150,31 @@ func CreateMovie(w http.ResponseWriter, req *http.Request) {
 	json.NewEncoder(w).Encode(movie)
 }
 
-func MarkAsWatched(w http.ResponseWriter, req *http.Request){
+func MarkAsWatched(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "*") 
-	w.Header().Set("Access-Control-Allow-Methods", "*") 
-	
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "*")
+
 	params := mux.Vars(req) // getting all the params
 	updateOneMovie(params["id"])
 	json.NewEncoder(w).Encode(params)
 }
 
-func DeleteAMovie(w http.ResponseWriter, req *http.Request){
+func DeleteAMovie(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "*") 
-	w.Header().Set("Access-Control-Allow-Methods", "*") 
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "*")
 
 	params := mux.Vars(req)
 	deleteOneMovie(params["id"])
 	json.NewEncoder(w).Encode(params)
 }
 
-func DeleteAllMovie(w http.ResponseWriter, req *http.Request){
+func DeleteAllMovie(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "*") 
-	w.Header().Set("Access-Control-Allow-Methods", "*") 
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "*")
 
-	deleteManyMovies()
-	json.NewEncoder(w).Encode(params)
+	count := deleteManyMovies()
+	json.NewEncoder(w).Encode(count)
 }
