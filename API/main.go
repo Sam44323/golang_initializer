@@ -116,6 +116,22 @@ func updateOneCourse(res http.ResponseWriter, req *http.Request) {
 	json.NewEncoder(res).Encode("No such course was found!")
 }
 
+// deleting a course
+func deleteOneCourse(res http.ResponseWriter, req *http.Request) {
+	fmt.Println("Updating one course")
+	res.Header().Set("Content-Type", "application/json")
+
+	params := mux.Vars(req) // getting the id from the url
+	for index, c := range courses {
+		if c.CourseId == params["id"] {
+			courses = append(courses[:index], courses[index+1:]...) // removing the course with that id
+			json.NewEncoder(res).Encode(courses)
+			return
+		}
+	}
+	json.NewEncoder(res).Encode("No such course was found!")
+}
+
 func main() {
 
 }
