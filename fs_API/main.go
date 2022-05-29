@@ -9,7 +9,6 @@ import (
 )
 
 func main() {
-	fmt.Printf("MongoDB API initiating!")
-	fmt.Println("Initiating the server!")
+	fmt.Printf("Server is active \n")
 	log.Fatal(http.ListenAndServe(":3000", routes.Router()))
 }
