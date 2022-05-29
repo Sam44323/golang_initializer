@@ -168,3 +168,12 @@ func DeleteAMovie(w http.ResponseWriter, req *http.Request){
 	deleteOneMovie(params["id"])
 	json.NewEncoder(w).Encode(params)
 }
+
+func DeleteAllMovie(w http.ResponseWriter, req *http.Request){
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*") 
+	w.Header().Set("Access-Control-Allow-Methods", "*") 
+
+	deleteManyMovies()
+	json.NewEncoder(w).Encode(params)
+}
